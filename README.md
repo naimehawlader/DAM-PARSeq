@@ -69,10 +69,8 @@ Standard scene text recognition benchmarks:
 - SVTP
 - CUTE80
 
-Dataset preparation follows the original PARSeq repository.
-Dataset source:
-
-https://drive.google.com/drive/folders/1NYuoi7dfJVgo-zUJogh8UQZgIMpLviOE
+Dataset preparation follows the original PARSeq repository,
+Dataset source: https://drive.google.com/drive/folders/1NYuoi7dfJVgo-zUJogh8UQZgIMpLviOE
 
 # Method Overview
 
