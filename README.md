@@ -183,25 +183,108 @@ Training steps:
 4. Enhanced visual features are passed to the PARSeq decoder.
 5. Recognition loss is optimized.
 
-Example training command:
+## Training
+
+DAM-PARSeq follows the original PARSeq training pipeline with the additional DAM refinement module.
+
+### Basic Training Command
 
 ```bash
-python train.py dataset=real # Other option: synth. See configs/dataset/
+python train.py dataset=real
 ```
-Specify the character set for training
-./train.py charset=94_full  # Other options: 36_lowercase or 62_mixed-case. See configs/charset/
 
-Change general model training parameters
-./train.py model.img_size=[32, 128] model.max_label_length=25 model.batch_size=384
+Other dataset options can be specified through:
 
-Change pytorch_lightning.Trainer parameters
-./train.py trainer.max_epochs=20 trainer.accelerator=gpu trainer.devices=2 or 1
+```text
+configs/dataset/
+```
 
-Change data-related training parameters
-./train.py data.root_dir=data data.num_workers=2 data.augment=true
+---
 
+### Character Set Configuration
 
-Note that you can pass any Trainer parameter, you just need to prefix it with + if it is not originally specified in configs/main.yaml.
+Specify the character set for training:
+
+```bash
+python train.py charset=94_full
+```
+
+Available options:
+
+- `36_lowercase`
+- `62_mixed-case`
+- `94_full`
+
+Configuration files:
+
+```text
+configs/charset/
+```
+
+---
+
+### Model Training Parameters
+
+Modify general model parameters:
+
+```bash
+python train.py \
+model.img_size=[32,128] \
+model.max_label_length=25 \
+model.batch_size=384
+```
+
+---
+
+### Trainer Parameters
+
+Modify PyTorch Lightning trainer settings:
+
+```bash
+python train.py \
+trainer.max_epochs=20 \
+trainer.accelerator=gpu \
+trainer.devices=2
+```
+
+For a single GPU:
+
+```bash
+python train.py \
+trainer.accelerator=gpu \
+trainer.devices=1
+```
+
+---
+
+### Data Parameters
+
+Modify data-related settings:
+
+```bash
+python train.py \
+data.root_dir=data \
+data.num_workers=2 \
+data.augment=true
+```
+
+---
+
+### Configuration Override
+
+Any configuration parameter can be modified from the command line.
+
+For parameters not originally defined in `configs/main.yaml`, prefix them with:
+
+```text
++
+```
+
+Example:
+
+```bash
+python train.py +trainer.devices=1
+```
 
 # Evaluation Procedure
 
