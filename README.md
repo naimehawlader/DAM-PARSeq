@@ -137,10 +137,11 @@ DAM-PARSeq/
 │
 ├── datasets/
 │
-├── models/
-│   └── parseq/
-│       ├── Baseline-PARSeq/
-│       └── DAM-PARSeq/
+├── strhub
+│     └──models/
+│          └── parseq/
+│              ├── Baseline-PARSeq
+│              └── DAM-PARSeq
 │
 ├── train.py
 ├── test.py
