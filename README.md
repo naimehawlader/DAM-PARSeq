@@ -1,35 +1,85 @@
-\documentclass[11pt]{article}
+# DAM-PARSeq
 
-\usepackage{hyperref}
-\usepackage{listings}
-\usepackage{geometry}
-\geometry{margin=1in}
+**Deformable Attention Module Enhanced PARSeq for Robust Scene Text Recognition**
 
-\title{DAM-PARSeq: Deformable Attention Module Enhanced PARSeq for Robust Scene Text Recognition}
+## Getting Started
 
-\author{}
+This repository provides the implementation of **DAM-PARSeq**, a modified version of the original PARSeq framework for robust Scene Text Recognition (STR).
 
-\begin{document}
+The original PARSeq framework combines a Vision Transformer (ViT) encoder with a Permutation Language Modeling (PLM)-based decoder for sequence recognition. However, visual degradation factors, including blur, occlusion, distortion, illumination variation, and background interference, can reduce the quality of extracted visual representations.
 
-\maketitle
+To address these limitations, DAM-PARSeq introduces a **Deformable Attention Module (DAM)** between the ViT encoder and the PARSeq decoder. DAM adaptively refines visual tokens before sequence prediction while preserving the original PARSeq decoding strategy.
 
+This repository is developed based on the original PARSeq implementation:
 
-\section{Overview}
-
-This repository provides the implementation of \textbf{DAM-PARSeq}, a modified version of the original PARSeq framework for robust Scene Text Recognition (STR).
-
-The original PARSeq framework achieves strong recognition performance by combining a Vision Transformer (ViT) encoder with a Permutation Language Modeling (PLM)-based decoder. However, visual degradation factors including blur, occlusion, distortion, illumination variation, and background interference can reduce the quality of extracted visual representations.
-
-To address these limitations, DAM-PARSeq introduces a \textbf{Deformable Attention Module (DAM)} between the ViT encoder and the PARSeq decoder. DAM adaptively refines visual tokens before sequence prediction while preserving the original PARSeq decoding strategy.
+https://github.com/baudm/parseq
 
 
-\section{Method Overview}
+## Demo
 
-\subsection{Baseline-PARSeq}
+An inference demo can be performed using the provided testing pipeline after preparing the required dependencies and model checkpoint.
+
+
+## Installation
+
+### Requirements
+
+- Python >= 3.9
+- PyTorch >= 2.0
+
+Create environment:
+
+```bash
+conda create -n DAM_Parseq python=3.9
+conda activate DAM_Parseq
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+
+## Dataset Preparation
+
+DAM-PARSeq follows the original PARSeq evaluation protocol.
+
+### Training Datasets
+
+Synthetic training datasets:
+
+- MJSynth (MJ)
+- SynthText (ST)
+
+The synthetic training datasets (MJ and ST) and benchmark evaluation datasets follow the original PARSeq dataset preparation protocol.
+
+Dataset source:
+
+https://drive.google.com/drive/folders/1NYuoi7dfJVgo-zUJogh8UQZgIMpLviOE
+
+
+### Benchmark Evaluation Datasets
+
+Standard scene text recognition benchmarks:
+
+- IIIT5K
+- SVT
+- IC13
+- IC15
+- SVTP
+- CUTE80
+
+Dataset preparation follows the original PARSeq repository.
+
+
+# Method Overview
+
+## Baseline-PARSeq
 
 The original PARSeq framework follows:
 
-\begin{verbatim}
+```text
 Input Image
       |
       v
@@ -43,16 +93,16 @@ PARSeq Decoder
       |
       v
 Output Sequence
-\end{verbatim}
+```
 
-The visual features extracted from the encoder are directly transferred to the decoder.
+The visual features extracted from the ViT encoder are directly transferred to the PARSeq decoder.
 
 
-\subsection{Proposed DAM-PARSeq}
+## Proposed DAM-PARSeq
 
 The proposed framework inserts DAM between the ViT encoder and PARSeq decoder:
 
-\begin{verbatim}
+```text
 Input Image
       |
       v
@@ -72,213 +122,141 @@ PARSeq Decoder
       |
       v
 Output Sequence
-\end{verbatim}
+```
 
 DAM learns adaptive sampling locations and attention weights to enhance informative visual regions while reducing degraded visual responses.
 
 The original PARSeq decoder and permutation language modeling strategy remain unchanged.
 
 
-\section{Repository Structure}
+# Repository Structure
 
-\begin{verbatim}
+```text
 DAM-PARSeq/
 
-|-- configs/
-|
-|-- datasets/
-|
-|-- models/parseq
-|          |-- Baseline-Parseq/
-|          |-- DAM-Parseq/
-|
-|-- train.py
-|-- test.py
-|-- requirements.txt
-|-- README.tex
-
-\end{verbatim}
-
-
-\section{Getting Started}
-
-This repository is developed based on the original PARSeq implementation:
-
-\url{https://github.com/baudm/parseq}
-
-The original training pipeline, dataset processing procedures, and evaluation protocols are maintained. The main modification is the integration of DAM after the ViT encoder.
+├── configs/
+│
+├── datasets/
+│
+├── models/
+│   └── parseq/
+│       ├── Baseline-PARSeq/
+│       └── DAM-PARSeq/
+│
+├── train.py
+├── test.py
+├── requirements.txt
+└── README.md
+```
 
 
-\section{Installation}
-
-Requirements:
-
-\begin{itemize}
-\item Python $\geq$ 3.9
-\item PyTorch $\geq$ 2.0
-\end{itemize}
-
-
-Create environment:
-
-\begin{verbatim}
-conda create -n DAM_parseq python=3.9
-conda activate DAM_parseq
-\end{verbatim}
-
-
-Install dependencies:
-
-\begin{verbatim}
-pip install -r requirements.txt
-\end{verbatim}
-
-
-\section{Dataset Preparation}
-
-DAM-PARSeq follows the original PARSeq evaluation protocol.
-
-\subsection{Training Datasets}
-
-Synthetic training datasets:
-
-\begin{itemize}
-      \item Training datasets: MJ + ST
-      \item Same PARSeq optimization pipeline
-\end{itemize}
-The synthetic training datasets (MJ and ST) and benchmark evaluation datasets follow the original 
-PARSeq dataset preparation protocol.: https://drive.google.com/drive/folders/1NYuoi7dfJVgo-zUJogh8UQZgIMpLviOE
-
-\subsection{Benchmark Evaluation Datasets}
-
-Standard scene text recognition benchmarks:
-
-\begin{itemize}
-\item IIIT5K
-\item SVT
-\item IC13
-\item IC15
-\item SVTP
-\item CUTE80
-\end{itemize}
-
-Dataset preparation follows the original PARSeq repository.
-
-
-\section{Model Modification}
+# Model Modification
 
 The original PARSeq framework:
 
-\begin{verbatim}
+```python
 visual_features = encoder(image)
 
 prediction = decoder(visual_features)
-\end{verbatim}
+```
 
 
 DAM-PARSeq:
 
-\begin{verbatim}
+```python
 visual_features = encoder(image)
 
 refined_features = DAM(visual_features)
 
 prediction = decoder(refined_features)
-\end{verbatim}
-
+```
 
 DAM improves visual representation quality before decoding without modifying the PARSeq decoder architecture.
 
 
-\section{Training Procedure}
+# Training Procedure
 
 The training procedure follows the original PARSeq framework.
 
 Training steps:
 
-\begin{enumerate}
-\item Input images are processed by the ViT encoder.
-\item Visual tokens are extracted.
-\item DAM refines visual representations.
-\item Enhanced visual features are passed to the PARSeq decoder.
-\item Recognition loss is optimized.
-\end{enumerate}
-
+1. Input images are processed by the ViT encoder.
+2. Visual tokens are extracted.
+3. DAM refines visual representations.
+4. Enhanced visual features are passed to the PARSeq decoder.
+5. Recognition loss is optimized.
 
 Example training command:
 
-\begin{verbatim}
+```bash
 python train.py
-\end{verbatim}
+```
 
 
-\section{Evaluation Procedure}
+# Evaluation Procedure
 
 Evaluation can be performed using:
 
-\begin{verbatim}
+```bash
 python test.py <checkpoint_path>
-\end{verbatim}
-
+```
 
 Evaluation metrics include:
 
-\begin{itemize}
-\item Accuracy
-\item 1-Normalized Edit Distance (1-NED)
-\item Confidence Score
-\end{itemize}
+- Accuracy
+- 1-Normalized Edit Distance (1-NED)
+- Confidence Score
 
 
-\section{Real Printed-Sign Dataset}
+# Real Printed-Sign Dataset
 
 DAM-PARSeq was additionally evaluated on a real printed-sign dataset containing 804 images.
 
 The dataset contains challenging degradation conditions:
 
-\begin{itemize}
-\item Motion blur
-\item Occlusion
-\item Distortion
-\item Low illumination
-\item Background interference
-\item Partially visible characters
-\end{itemize}
+- Motion blur
+- Occlusion
+- Distortion
+- Low illumination
+- Background interference
+- Partially visible characters
 
 The dataset was collected by the authors for robustness evaluation and is not publicly available due to privacy considerations.
 
 
-\section{Reproducing DAM-PARSeq Results}
+# Reproducing DAM-PARSeq Results
 
 To reproduce the experimental results:
 
-\begin{enumerate}
-\item Prepare the synthetic STR datasets.
-\item Install all required dependencies.
-\item Train DAM-PARSeq using the provided training pipeline.
-\item Evaluate the trained model using the testing script.
-\item Compare performance using Accuracy, 1-NED, and Confidence metrics.
-\end{enumerate}
+1. Prepare the synthetic STR datasets.
+2. Install all required dependencies.
+3. Train DAM-PARSeq using the provided training pipeline.
+4. Evaluate the trained model using the testing script.
+5. Compare performance using Accuracy, 1-NED, and Confidence metrics.
 
 
-\section{Citation}
+# Citation
 
-This repository is based on the original PARSeq implementation. If you use this repository, please cite the PARSeq paper:
+This repository is based on the original PARSeq implementation.
 
-\begin{verbatim}
+If you use this repository, please cite the PARSeq paper:
+
+```bibtex
 @InProceedings{bautista2022parseq,
-title={Scene Text Recognition with 
-Permuted Autoregressive Sequence Models},
+title={Scene Text Recognition with Permuted Autoregressive Sequence Models},
 author={Bautista, Darwin and Atienza, Rowel},
 booktitle={European Conference on Computer Vision},
 pages={178--196},
 year={2022},
 publisher={Springer Nature Switzerland}
 }
-\end{verbatim}
+```
 
 
-\end{document}
-=======
-# DAM-PARSeq
-Robustness-Enhanced STR for Occluded and Blurred Printed Signs Using a Deformable Attention Module53ce432635722773106ddd123a6f413a09c7f15d
+# Acknowledgement
+
+This work is built upon the original PARSeq implementation:
+
+https://github.com/baudm/parseq
+
+We thank the PARSeq authors for making their code publicly available.
