@@ -45,6 +45,10 @@ pip install -r requirements.txt
 
 DAM-PARSeq follows the original PARSeq evaluation protocol.
 
+## Dataset Samples
+
+![Dataset Samples](Dataset-View.png)
+
 ### Training Datasets
 
 Synthetic training datasets:
