@@ -1,4 +1,3 @@
- HEAD
 \documentclass[11pt]{article}
 
 \usepackage{hyperref}
