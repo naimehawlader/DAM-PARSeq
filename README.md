@@ -54,11 +54,6 @@ Synthetic training datasets:
 
 The synthetic training datasets (MJ and ST) and benchmark evaluation datasets follow the original PARSeq dataset preparation protocol.
 
-Dataset source:
-
-https://drive.google.com/drive/folders/1NYuoi7dfJVgo-zUJogh8UQZgIMpLviOE
-
-
 ### Benchmark Evaluation Datasets
 
 Standard scene text recognition benchmarks:
@@ -71,7 +66,9 @@ Standard scene text recognition benchmarks:
 - CUTE80
 
 Dataset preparation follows the original PARSeq repository.
+Dataset source:
 
+https://drive.google.com/drive/folders/1NYuoi7dfJVgo-zUJogh8UQZgIMpLviOE
 
 # Method Overview
 
@@ -189,9 +186,22 @@ Training steps:
 Example training command:
 
 ```bash
-python train.py
+python train.py dataset=real # Other option: synth. See configs/dataset/
 ```
+Specify the character set for training
+./train.py charset=94_full  # Other options: 36_lowercase or 62_mixed-case. See configs/charset/
 
+Change general model training parameters
+./train.py model.img_size=[32, 128] model.max_label_length=25 model.batch_size=384
+
+Change pytorch_lightning.Trainer parameters
+./train.py trainer.max_epochs=20 trainer.accelerator=gpu trainer.devices=2 or 1
+
+Change data-related training parameters
+./train.py data.root_dir=data data.num_workers=2 data.augment=true
+
+
+Note that you can pass any Trainer parameter, you just need to prefix it with + if it is not originally specified in configs/main.yaml.
 
 # Evaluation Procedure
 
@@ -199,6 +209,9 @@ Evaluation can be performed using:
 
 ```bash
 python test.py <checkpoint_path>
+
+./test.py outputs/<model>/<timestamp>/checkpoints/best.ckpt  # or use the released weights: ./test.py pretrained=parseq
+*same evaluation procedure for TRVA, ViTSTR, ABINet, CRNN, for an example:python test.py pretrained=crnn
 ```
 
 Evaluation metrics include:
@@ -255,8 +268,4 @@ publisher={Springer Nature Switzerland}
 
 # Acknowledgement
 
-This work is built upon the original PARSeq implementation:
-
-https://github.com/baudm/parseq
-
-We thank the PARSeq authors for making their code publicly available.
+This work is built upon the original PARSeq implementation. We thank the PARSeq authors for making their code publicly available.
