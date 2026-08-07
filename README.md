@@ -10,10 +10,10 @@ The original PARSeq framework combines a Vision Transformer (ViT) encoder with a
 
 To address these limitations, DAM-PARSeq introduces a **Deformable Attention Module (DAM)** between the ViT encoder and the PARSeq decoder. DAM adaptively refines visual tokens before sequence prediction while preserving the original PARSeq decoding strategy.
 
-This repository is developed based on the original PARSeq implementation:
+This repository is developed based on the original PARSeq implementation.  
+The source code of DAM-PARSeq, including the original Baseline-PARSeq implementation, is publicly available at:
 
-https://github.com/baudm/parseq
-
+https://github.com/naimehawlader/DAM-PARSeq
 
 ## Demo
 
