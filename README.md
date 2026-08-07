@@ -1,3 +1,4 @@
+ HEAD
 \documentclass[11pt]{article}
 
 \usepackage{hyperref}
@@ -279,3 +280,6 @@ publisher={Springer Nature Switzerland}
 
 
 \end{document}
+=======
+# DAM-PARSeq
+Robustness-Enhanced STR for Occluded and Blurred Printed Signs Using a Deformable Attention Module53ce432635722773106ddd123a6f413a09c7f15d
