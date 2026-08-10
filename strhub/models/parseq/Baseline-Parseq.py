@@ -19,7 +19,7 @@ from typing import Optional, Sequence
 import torch
 import torch.nn as nn
 from torch import Tensor
-from .encoder_with_dam import EncoderWithDAM
+
 from timm.models.helpers import named_apply
 
 from strhub.data.utils import Tokenizer
