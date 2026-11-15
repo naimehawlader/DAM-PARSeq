@@ -47,7 +47,7 @@ DAM-PARSeq follows the original PARSeq evaluation protocol.
 
 ## Dataset Samples
 
-![Dataset Samples](Dataset-View.png)
+![Dataset Samples](Datasets-both.png)
 
 ### Training Datasets
 
